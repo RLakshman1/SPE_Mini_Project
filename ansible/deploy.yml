@@ -10,11 +10,11 @@
         update_cache: yes
       when: ansible_os_family == 'Debian'
 
-    - name: Install docker
-      apt:
-        name: docker.io
-        state: present
-      when: ansible_os_family == 'Debian'
+        #   - name: Install docker
+        #pt:
+        #name: docker.io
+        #state: present
+        #when: ansible_os_family == 'Debian'
 
     - name: Ensure docker service is started
       service:
@@ -24,8 +24,8 @@
 
     - name: Pull latest image
       community.docker.docker_image:
-        name: "{ docker_image }"
-        tag: "{ docker_tag }"
+        name: "{{ docker_image }}"
+        tag: "{{ docker_tag }}"
         source: pull
 
     - name: Remove existing container if present
@@ -37,7 +37,7 @@
     - name: Run container
       community.docker.docker_container:
         name: maven_app
-        image: "{ docker_image }:{ docker_tag }"
+        image: "{{docker_image}}:{{docker_tag}}"
         state: started
         restart_policy: always
         ports:
