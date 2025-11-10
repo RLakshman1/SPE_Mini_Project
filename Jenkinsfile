@@ -1,6 +1,7 @@
 pipeline {
   agent any
   environment {
+    DOCKERHUB_CREDENTIALS = credentials('docker_hub')
     DOCKER_IMAGE = "rlakshmandocker/miniproj_image1"
     DOCKER_TAG = "1.0"
   }
