@@ -31,12 +31,22 @@ pipeline {
         sh 'docker build -t ${DOCKER_IMAGE}:${DOCKER_TAG} .'
       }
     }
-    stage('Push Docker') {
+    // stage('Push Docker') {
+    //   steps {
+    //     withCredentials([usernamePassword(credentialsId: 'dockerhub-creds', usernameVariable: 'DOCKERHUB_USER', passwordVariable: 'DOCKERHUB_PASS')]) {
+    //       sh 'echo $DOCKERHUB_PASS | docker login -u $DOCKERHUB_USER --password-stdin'
+    //       sh 'docker push ${DOCKER_IMAGE}:${DOCKER_TAG}'
+    //       sh 'docker logout'
+    //     }
+    //   }
+    // }
+     stage('Push Docker') {
       steps {
-        withCredentials([usernamePassword(credentialsId: 'dockerhub-creds', usernameVariable: 'DOCKERHUB_USER', passwordVariable: 'DOCKERHUB_PASS')]) {
-          sh 'echo $DOCKERHUB_PASS | docker login -u $DOCKERHUB_USER --password-stdin'
-          sh 'docker push ${DOCKER_IMAGE}:${DOCKER_TAG}'
-          sh 'docker logout'
+          sh """
+            echo "$DOCKERHUB_CREDENTIALS_PSW" | docker login -u "$DOCKERHUB_CREDENTIALS_USR" --password-stdin
+            docker push $DOCKER_IMAGE:$DOCKER_TAG
+            docker logout
+          """
         }
       }
     }
