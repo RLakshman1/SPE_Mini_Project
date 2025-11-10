@@ -49,24 +49,24 @@ pipeline {
           """
       }
     }
-    stage('Deploy (Ansible)') {
-    environment { VENV = "${WORKSPACE}/.venv" }
-      steps {
-        withCredentials([string(credentialsId: 'sudo-pass', variable: 'SUDO_PASSWORD')]) {
-          sh '''
-            set -e
-            python3 -m venv "$VENV"
-            . "$VENV/bin/activate"
-            pip install --upgrade pip ansible
-            ansible --version
+    // stage('Deploy (Ansible)') {
+    // environment { VENV = "${WORKSPACE}/.venv" }
+    //   steps {
+    //     withCredentials([string(credentialsId: 'sudo-pass', variable: 'SUDO_PASSWORD')]) {
+    //       sh '''
+    //         set -e
+    //         python3 -m venv "$VENV"
+    //         . "$VENV/bin/activate"
+    //         pip install --upgrade pip ansible
+    //         ansible --version
     
-            # Run playbook with sudo (become) password from credentials
-            ansible-playbook ansible/deploy.yml -i ansible/hosts \
-              --extra-vars "ansible_become_pass=${SUDO_PASSWORD}"
-          '''
-        }
-      }
-    }
+    //         # Run playbook with sudo (become) password from credentials
+    //         ansible-playbook ansible/deploy.yml -i ansible/hosts \
+    //           --extra-vars "ansible_become_pass=${SUDO_PASSWORD}"
+    //       '''
+    //     }
+    //   }
+    // }
 
   }
   post {
