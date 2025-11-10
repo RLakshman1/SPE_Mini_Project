@@ -47,7 +47,6 @@ pipeline {
             docker push $DOCKER_IMAGE:$DOCKER_TAG
             docker logout
           """
-        }
       }
     }
     stage('Deploy (Ansible)') {
