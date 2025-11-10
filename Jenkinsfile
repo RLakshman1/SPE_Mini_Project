@@ -30,7 +30,7 @@ pipeline {
       steps {
         sh """
           # Build the Docker image
-          docker build -t ${DOCKER_IMAGE}:${DOCKER_TAG} .
+          docker build -it ${DOCKER_IMAGE}:${DOCKER_TAG} .
     
           # Stop and remove old container if it exists
           docker rm -f calc-app || true
