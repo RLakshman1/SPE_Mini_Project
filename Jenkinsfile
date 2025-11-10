@@ -58,7 +58,7 @@ pipeline {
           pip install --upgrade pip
           pip install ansible
           ansible --version
-          ansible-playbook -i ansible/hosts ansible/deploy.yml
+          ansible-playbook ansible/deploy.yml -i ansible/hosts 
         '''
       }
     }
