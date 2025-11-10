@@ -5,7 +5,7 @@ import java.math.BigInteger;
 public class ScientificCalculator {
 
     public static double sqrt(double x) {
-        if (x < 0) throw new IllegalArgumentException("Square root of negative number");
+        if (x < 0) throw new IllegalArgumentException("Square root of a negative number");
         return Math.sqrt(x);
     }
 
