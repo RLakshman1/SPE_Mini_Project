@@ -28,9 +28,19 @@ pipeline {
     }
     stage('Build Docker') {
       steps {
-        sh 'docker build -t ${DOCKER_IMAGE}:${DOCKER_TAG} .'
+        sh """
+          # Build the Docker image
+          docker build -t ${DOCKER_IMAGE}:${DOCKER_TAG} .
+    
+          # Stop and remove old container if it exists
+          docker rm -f calc-app || true
+    
+          # Run the new container in background (detached)
+          docker run -d --name calc-app ${DOCKER_IMAGE}:${DOCKER_TAG}
+        """
       }
     }
+
     // stage('Push Docker') {
     //   steps {
     //     withCredentials([usernamePassword(credentialsId: 'dockerhub-creds', usernameVariable: 'DOCKERHUB_USER', passwordVariable: 'DOCKERHUB_PASS')]) {
