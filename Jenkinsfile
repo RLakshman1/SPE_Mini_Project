@@ -50,8 +50,16 @@ pipeline {
       }
     }
     stage('Deploy (Ansible)') {
+      environment { VENV = "${WORKSPACE}/.venv" }
       steps {
-        sh 'ansible-playbook -i ansible/hosts ansible/deploy.yml '
+        sh '''
+          python3 -m venv "$VENV"
+          . "$VENV/bin/activate"
+          pip install --upgrade pip
+          pip install ansible
+          ansible --version
+          ansible-playbook -i ansible/hosts ansible/deploy.yml
+        '''
       }
     }
   }
