@@ -39,7 +39,7 @@ pipeline {
     //       sh 'docker logout'
     //     }
     //   }
-    // }
+    // } dummy
      stage('Push Docker') {
       steps {
           sh """
